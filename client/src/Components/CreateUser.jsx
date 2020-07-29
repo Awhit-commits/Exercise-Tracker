@@ -36,7 +36,7 @@ export default class CreateUser extends Component {
                         <input type="text" required className="form-control" name="" id="" value ={this.state.username} onChange={this.onChangeUsername}/>
                     </div>
                     <div className="form-group">
-                        <input type="submit" value="Create a New User"/>
+                        <input className = "btn btn-primary" type="submit" value="Create a New User"/>
                     </div>
                 </form>
             </div>
