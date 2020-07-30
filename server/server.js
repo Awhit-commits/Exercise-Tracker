@@ -27,7 +27,8 @@ if (process.env.NODE_ENV === 'production') {
     });
   }
 //
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }); 
+let mongoDB = 'mongodb+srv://ndrwwhtmr:VaUOsbhP8iq8kqQ2@cluster0-taich.mongodb.net/test?retryWrites=true&w=majority'
+mongoose.connect(process.env.MONGODB_URI || mongoDB, { useNewUrlParser: true }); 
 mongoose.connection.once('open', () => {
   console.log('Connected to the Database.');
 });
