@@ -14,7 +14,7 @@ export default class CreateUser extends Component {
     onChangeUsername = (event)=>{
         this.setState({username:event.target.value})
     }
-    onSubmit= (e)=>{
+    onSubmit= async (e)=>{
         e.preventDefault();
         const user ={
             username:this.state.username,
@@ -23,8 +23,19 @@ export default class CreateUser extends Component {
         console.log(user);
         this.setState({username:""})
         // window.location ='/';
-        axios.post('http://localhost:5000/users/add',user)
-        .then(res=>console.log(res.data))
+        // axios.post('http://localhost:5000/users/add',user)
+        // .then(res=>console.log(res.data))
+        let resposne = await fetch (`/users/add`,{
+            method:"POST",
+            headers:{ 
+            "Accept": "application/json",
+            "content-type": "application/json"},
+            body:JSON.stringify(user)
+
+            
+        })
+        let json =  await resposne.json();
+        console.log(json);
     }
     render() {
         return (
