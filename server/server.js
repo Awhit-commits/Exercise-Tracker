@@ -19,10 +19,13 @@ app.use('/users',user);
 app.use('/exercises',exercises)
 
 //
-app.use(express.static(path.join(__dirname, '../client/build')))
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build'))
-})
+if (process.env.NODE_ENV === 'production') {           
+    app.use(express.static('client/build'));
+  
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+  }
 //
 let mongoDB = 'mongodb+srv://ndrwwhtmr:VaUOsbhP8iq8kqQ2@cluster0-taich.mongodb.net/test?retryWrites=true&w=majority'
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
