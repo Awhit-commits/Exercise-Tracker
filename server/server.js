@@ -27,11 +27,13 @@ if (process.env.NODE_ENV === 'production') {
     });
   }
 //
-let mongoDB = 'mongodb+srv://ndrwwhtmr:VaUOsbhP8iq8kqQ2@cluster0-taich.mongodb.net/test?retryWrites=true&w=majority'
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
-// connection error message
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }); 
+mongoose.connection.once('open', () => {
+  console.log('Connected to the Database.');
+});
+mongoose.connection.on('error', err => {
+  console.log('Mongoose Connection Error : ' + err);
+});
 //Storing port inside of variable
 const port = process.env.PORT||5000;
 
