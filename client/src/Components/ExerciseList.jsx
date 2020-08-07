@@ -21,14 +21,11 @@ export default class ExerciseList extends Component {
              exercises:[]
         }
     }
-    componentDidMount(){
-        axios.get('http://localhost:5000/exercises/')
-        .then(response =>{
-            this.setState({exercises:response.data})
-        })
-        .catch((error)=>{
-            console.log(error);
-        })
+    async componentDidMount(){
+        let response =  await fetch (`/exercises`);
+        let json = await response.json()
+        console.log(json);
+        this.setState({exercises:json})
     }
     deleteExercise (id){
         axios.delete(`http://localhost:5000/exercises/${id}`)
