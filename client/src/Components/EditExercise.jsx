@@ -23,7 +23,7 @@ export default class EditExercise extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/exercises/" + this.props.match.params.id)
+      .get("/exercises/" + this.props.match.params.id)
       .then((response) => {
         this.setState({
           username: response.data.username,
@@ -36,7 +36,8 @@ export default class EditExercise extends Component {
         console.log(error);
       });
 
-    axios.get("http://localhost:5000/users/")
+    axios
+      .get("/users/")
       .then((response) => {
         if (response.data.length > 0) {
           this.setState({
@@ -73,7 +74,7 @@ export default class EditExercise extends Component {
     });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
 
     const exercise = {
@@ -85,12 +86,26 @@ export default class EditExercise extends Component {
 
     console.log(exercise);
 
-    axios
-      .post(
-        "http://localhost:5000/exercises/update/" + this.props.match.params.id,
-        exercise
-      )
-      .then((res) => console.log(res.data));
+    // axios
+    //   .post(
+    //     "exercises/update/" + this.props.match.params.id,
+    //     exercise
+    //   )
+    //   .then((res) => console.log(res.data));
+
+    let response = await fetch(
+      `/exercises/update/${this.props.match.params.id}`,
+      {
+        method: "put",
+        headers: {
+          Accept: "application/json",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(exercise),
+      }
+    );
+    let json = await response.json();
+    console.log(json);
 
     window.location = "/";
   }
